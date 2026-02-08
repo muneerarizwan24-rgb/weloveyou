@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muneera & Sarrah's Challenge</title>
+    <style>
+        :root { --pink: #ff4d6d; --light-pink: #fff0f3; --dark-red: #c9184a; }
+        body { background-color: var(--light-pink); font-family: 'Arial', sans-serif; text-align: center; color: #d00000; padding: 20px; overflow-x: hidden; }
+        
+        /* Floating Hearts Animation */
+        .heart { position: fixed; color: var(--pink); font-size: 20px; animation: float 5s linear infinite; z-index: -1; opacity: 0.6; }
+        @keyframes float { 0% { transform: translateY(100vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
+
+        .card { background: white; max-width: 450px; margin: auto; padding: 25px; border-radius: 25px; box-shadow: 0 15px 35px rgba(255, 75, 110, 0.3); border: 2px solid #ffb3c1; position: relative; }
+        .hidden { display: none; }
+        .btn { background: var(--pink); color: white; border: none; padding: 12px 25px; margin: 10px; border-radius: 25px; cursor: pointer; font-weight: bold; width: 80%; transition: 0.3s; }
+        .btn:hover { background: #ff758f; transform: scale(1.05); }
+        .emoji { font-size: 60px; display: block; margin-bottom: 10px; }
+        h2 { color: var(--dark-red); }
+        
+        /* Schedule Table */
+        table { width: 100%; margin: 15px 0; font-size: 14px; color: #444; border-collapse: collapse; }
+        td { padding: 8px; border-bottom: 1px solid #ffe5ec; text-align: left; }
+        .today-row { background-color: #ffdae0; font-weight: bold; color: var(--dark-red); }
+
+        /* Marriage Reminder Box */
+        .reminder-box { background: #fff9f9; border: 2px dashed #ffb3c1; padding: 15px; margin: 20px 0; border-radius: 15px; font-style: italic; color: #555; }
+        #countdown { font-weight: bold; color: var(--pink); font-size: 18px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div id="step1">
+            <span class="emoji">🗓️</span>
+            <h2>Do you even know what day it is?</h2>
+            <p>Today is <strong>February 8th</strong>.</p>
+            <p>In Valentine's Week, that makes it...</p>
+            <button class="btn" onclick="nextStep(2)">Propose Day 💍</button>
+            <button class="btn" onclick="alert('Wrong! Try again.')">Just Sunday 😴</button>
+        </div>
+
+        <div id="step2" class="hidden">
+            <span class="emoji">📅</span>
+            <h2>Don't You Forget!</h2>
+            <p>Here is your cheat sheet for the week:</p>
+            <table>
+                <tr><td>Feb 7</td><td>Rose Day 🌹</td></tr>
+                <tr class="today-row"><td>Feb 8</td><td>Propose Day 💍 (Today!)</td></tr>
+                <tr><td>Feb 9</td><td>Chocolate Day 🍫</td></tr>
+                <tr><td>Feb 10</td><td>Teddy Day 🧸</td></tr>
+                <tr><td>Feb 11</td><td>Promise Day 🤝</td></tr>
+                <tr><td>Feb 12</td><td>Hug Day 🤗</td></tr>
+                <tr><td>Feb 13</td><td>Kiss Day 💋</td></tr>
+                <tr><td>Feb 14</td><td>Valentine's Day ❤️</td></tr>
+            </table>
+            <button class="btn" onclick="nextStep(3)">Got it! 🫡</button>
+        </div>
+
+        <div id="step3" class="hidden">
+            <span class="emoji">🤔</span>
+            <h2>How well do you know Muneera?</h2>
+            <p>What is the one thing that makes her feel most loved?</p>
+            <button class="btn" onclick="nextStep(4)">Surprise Gifts & Flowers 🎁</button>
+            <button class="btn" onclick="nextStep(4)">Quality Time & Help with Sarrah 👶🏻</button>
+            <button class="btn" onclick="nextStep(4)">All of the above (Correct Answer!)</button>
+        </div>
+
+        <div id="step4" class="hidden">
+            <span class="emoji">🍕</span>
+            <h2>What does she like most?</h2>
+            <p>If Muneera is tired after a long month, what should you do?</p>
+            <button class="btn" onclick="alert('Wrong! That is not enough effort!')">Order her favorite food & massage her feet</button>
+            <button class="btn" onclick="nextStep(5)">Spoil her with hugs & kisses and say "Welcome Home" with a gift 🎁</button>
+        </div>
+
+        <div id="step5" class="hidden">
+            <span class="emoji">🥺</span>
+            <h2>A Reality Check...</h2>
+            <div class="reminder-box">
+                "It's been 2 years since our marriage, but that doesn't mean you should stop doing things for us. I need to feel loved "
+            </div>
+            <p>Shall I come back from Mummy's now?</p>
+            <button class="btn" onclick="nextStep(6)">YES! I miss you both! ❤️</button>
+            <button class="btn" onclick="showSad()">No, stay another week</button>
+        </div>
+
+        <div id="step6" class="hidden">
+            <span class="emoji">💖</span>
+            <h2>Final Promise</h2>
+            <p>Since it's Sarrah's 1st Valentine, will you make this week extra special for us?</p>
+            <button class="btn" onclick="nextStep('final')">I PROMISE! ✋</button>
+        </div>
+
+        <div id="final" class="hidden">
+            <span class="emoji">👨‍👩‍👧</span>
+            <h2>See You Soon!</h2>
+            <p>Muneera and Sarrah are coming home. Better start planning!</p>
+            <div id="countdown"></div>
+            <button class="btn" style="background:#25D366;" onclick="sendWhatsApp()">Send I Promise to Muneera ✅</button>
+            <button class="btn" style="background:#800e13; margin-top:10px;" onclick="location.reload()">Start Again 🔄</button>
+        </div>
+
+        <div id="sad" class="hidden">
+            <span class="emoji">😢</span>
+            <h2>Umm... Wow.</h2>
+            <p>So you don't miss me? Fine. Sarrah and I are staying at Mummy's forever.</p>
+            <button class="btn" onclick="location.reload()">WAIT! I was joking! Restart!</button>
+        </div>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createHeart, 300);
+
+        function nextStep(step) {
+            document.querySelectorAll('.card > div').forEach(div => div.classList.add('hidden'));
+            if(step === 'final') {
+                document.getElementById('final').classList.remove('hidden');
+                startCountdown();
+            } else {
+                document.getElementById('step' + step).classList.remove('hidden');
+            }
+        }
+
+        function showSad() {
+            document.querySelectorAll('.card > div').forEach(div => div.classList.add('hidden'));
+            document.getElementById('sad').classList.remove('hidden');
+        }
+
+        function startCountdown() {
+            const countDate = new Date("Feb 10, 2026 12:00:00").getTime();
+            setInterval(() => {
+                const now = new Date().getTime();
+                const gap = countDate - now;
+                const d = Math.floor(gap / (1000 * 60 * 60 * 24));
+                const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((gap % (1000 * 60)) / 1000);
+                document.getElementById("countdown").innerText = d + "d " + h + "h " + m + "m " + s + "s remaining!";
+            }, 1000);
+        }
+
+        function sendWhatsApp() {
+            const msg = encodeURIComponent("I promise to make this Valentine's week special for you and Sarrah! I miss you both so much! ❤️");
+            window.open(`https://wa.me/?text=${msg}`, '_blank');
+        }
+    </script>
+</body>
+</html>
